@@ -5,5 +5,4 @@ def divide(a, b):
         while not b.isdigit():
             b = input("Введите второе число: ")
         b = int(b)
-    res = a / b
-    return res
+    return a / b
