@@ -1,9 +1,7 @@
 import string
 import random
 import zipfile
-
-
-PASSWORD_LENGTH = 4
+from itertools import product
 
 
 def extract_archive(file_to_open, password):
@@ -26,21 +24,21 @@ def hack_archive(file_name):
     wrong_passwords = []  # список паролей, которые не подошли
     tries = 0  # колличество неудачных попыток
     my_list = []
-    while True:
-        password = random.randint(1000, 9999)
-        password = str(password)
-        if password in wrong_passwords:
-            continue
-        elif extract_archive(file_to_open, password):
-            break
-        wrong_passwords.append(password)
+    for i in product("1234567890", repeat=4):
+        password = ''.join(i)
         tries += 1
-        continue
+        if extract_archive(file_to_open, password):
+            break
+        elif password in wrong_passwords:
+            continue
+        wrong_passwords.append(password)
 
     print(f'Archive {file_name} is hacked. Password - {password}')
     print(f'Password was found after {tries} tries')
     print(wrong_passwords, "\n", tries, '\n', password)
 
+
 #############
+
 filename = 'archive.zip'
 hack_archive(filename)
